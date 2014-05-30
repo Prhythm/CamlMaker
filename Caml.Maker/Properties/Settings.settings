@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Caml.Maker.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Caml_Maker_ViewWebService_Views" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://tw-sps10-dev5/_vti_bin/views.asmx</Value>
+    </Setting>
+    <Setting Name="Caml_Maker_ListWebService_Lists" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://tw-sps10-dev5/_vti_bin/lists.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
