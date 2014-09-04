@@ -12,7 +12,7 @@ namespace Caml.Maker.Model
 
         public static void Log(string message, params object[] param)
         {
-            if (LogArea != null)
+            if (LogArea != null && LogArea.Visible)
             {
                 LogArea.Invoke(new MethodInvoker(() =>
                 {
@@ -26,7 +26,7 @@ namespace Caml.Maker.Model
 
         public static void Clear()
         {
-            if (LogArea != null)
+            if (LogArea != null && LogArea.Visible)
             {
                 LogArea.Invoke(new MethodInvoker(() =>
                 {
