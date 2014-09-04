@@ -19,7 +19,7 @@ namespace Caml.Maker.Model
 
         public string Filter { get; set; }
         public string LogicalJoins { get; set; }
-        public SharePointField Field { get; set; }
+        public SPField Field { get; set; }
         public ComparisonOperator ComparisonOperators { get; set; }
         public string Value { get; set; }
     }

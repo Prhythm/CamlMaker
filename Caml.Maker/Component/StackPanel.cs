@@ -83,7 +83,7 @@ namespace Caml.Maker.Model
 
                     sb.AppendFormat(
                         @"<FieldRef Name=""{0}""/>",
-                        item.Field.InternalName
+                        item.Field.StaticName
                     );
                 });
                 sb.Append("</GroupBy>");
@@ -103,7 +103,7 @@ namespace Caml.Maker.Model
 
                     sb.AppendFormat(
                         @"<FieldRef Name=""{0}""/>",
-                        item.Field.InternalName
+                        item.Field.StaticName
                     );
                 });
                 sb.Append("</OrderBy>");
@@ -146,7 +146,7 @@ namespace Caml.Maker.Model
                 var term = string.Format(
                     @"<{0}><FieldRef Name=""{1}""/><Value Type=""{2}"">{3}</Value></{0}>",
                     currentItem.ComparisonOperators.Name,
-                    currentItem.Field.InternalName,
+                    currentItem.Field.StaticName,
                     currentItem.Field.Type,
                     currentItem.Value
                 );

@@ -127,13 +127,13 @@ namespace Caml.Maker.Model
                 {
                     case "Where":
                         item.LogicalJoins = LogicalJoin.Text;
-                        item.Field = Field.SelectedItem as SharePointField;
+                        item.Field = Field.SelectedItem as SPField;
                         item.ComparisonOperators = ComparisonOperators.SelectedItem as ComparisonOperator;
                         item.Value = Value.Value;
                         break;
                     case "GroupBy":
                     case "OrderBy":
-                        item.Field = Field.SelectedItem as SharePointField;
+                        item.Field = Field.SelectedItem as SPField;
                         break;
                 }
                 return item;
@@ -331,7 +331,7 @@ namespace Caml.Maker.Model
 
         void Field_SelectedValueChanged(object sender, EventArgs e)
         {
-            Value.Field = Field.SelectedItem as SharePointField;
+            Value.Field = Field.SelectedItem as SPField;
             var c = new Control();
         }
 

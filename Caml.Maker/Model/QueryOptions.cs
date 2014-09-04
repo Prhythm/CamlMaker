@@ -16,7 +16,6 @@ namespace Caml.Maker.Model
 
         public override string ToString()
         {
-            //StringBuilder sb = new StringBuilder("<QueryOptions>");
             StringBuilder sb = new StringBuilder();
 
             if (DateInUtc != null) sb.AppendFormat("<DateInUtc>{1}</DateInUtc>", DateInUtc.ToString().ToUpper());
@@ -26,7 +25,6 @@ namespace Caml.Maker.Model
             if (MeetingInstanceID != null) sb.AppendFormat("<MeetingInstanceID>{0}</MeetingInstanceID>", (int)MeetingInstanceID);
             if (ViewAttributes != null) sb.AppendFormat("<ViewAttributes>{0}</ViewAttributes>", ViewAttributes);
 
-            //return sb.Append("</QueryOptions>").ToString();
             return sb.ToString();
         }
     }

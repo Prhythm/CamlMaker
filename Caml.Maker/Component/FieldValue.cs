@@ -19,14 +19,14 @@ namespace Caml.Maker.Model
             Margin = new Padding(0, 0, 0, 0);
         }
 
-        public FieldValue(SharePointField f)
+        public FieldValue(SPField f)
             : this()
         {
             Field = f;
         }
 
-        private SharePointField _Field;
-        public SharePointField Field
+        private SPField _Field;
+        public SPField Field
         {
             get
             {

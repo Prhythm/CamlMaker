@@ -1,4 +1,6 @@
 ﻿using Caml.Maker.Model;
+using Caml.Maker.Model.CM;
+using Caml.Maker.Model.WS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +24,34 @@ namespace Caml.Maker
             }
         }
 
-        DataTable ColumnInfo;
+        /// <summary>
+        /// Get credentials for sharepoint logon
+        /// </summary>
+        /// <returns></returns>
+        System.Net.ICredentials CurrentCredentials
+        {
+            get
+            {
+                if (rbCurrentUser.Checked)
+                {
+                    return System.Net.CredentialCache.DefaultCredentials;
+                }
+
+                if (rbCustomCredential.Checked)
+                {
+                    return new System.Net.NetworkCredential(
+                        tbAccount.Text.Trim(),
+                        tbPassword.Text.Trim(),
+                        tbDomain.Text.Trim()
+                    );
+                }
+
+                return null;
+            }
+        }
+
+        SPConnect Connector;
+        SPList CurrentList;
 
         public MainForm()
         {
@@ -87,7 +116,6 @@ namespace Caml.Maker
             RowItem.AllComparisonOperators = cmbComparisonOperators.Items;
             RowItem.AllFilter = cmbFilter.Items;
             RowItem.AllLogicalJoins = cmbLogicalJoins.Items;
-            //RowItem.AllValue = cmbValues.Items;
 
             // Log
             LogHandler.LogArea = tbLog;
@@ -145,7 +173,7 @@ namespace Caml.Maker
         void ClearListInfo()
         {
             // Clear list info
-            ColumnInfo = null;
+            CurrentList = null;
             tbListID.Text = tbListName.Text = string.Empty;
             dgvColumns.DataSource = null;
             dgvColumns.Refresh();
@@ -157,28 +185,7 @@ namespace Caml.Maker
             dgvResult.Refresh();
         }
 
-        /// <summary>
-        /// Get credentials for sharepoint logon
-        /// </summary>
-        /// <returns></returns>
-        System.Net.ICredentials GetCredentials()
-        {
-            if (rbCurrentUser.Checked)
-            {
-                return System.Net.CredentialCache.DefaultCredentials;
-            }
 
-            if (rbCustomCredential.Checked)
-            {
-                return new System.Net.NetworkCredential(
-                    tbAccount.Text.Trim(),
-                    tbPassword.Text.Trim(),
-                    tbDomain.Text.Trim()
-                );
-            }
-
-            return null;
-        }
 
         /// <summary>
         /// Set child controls disabled
@@ -212,6 +219,7 @@ namespace Caml.Maker
         {
             // Adjust list item size
             lvListLibrary.TileSize = new Size(lvListLibrary.ClientSize.Width, 16);
+            //lvListLibrary.ResumeLayout();
         }
 
         /// <summary>
@@ -232,8 +240,13 @@ namespace Caml.Maker
                         case "Connect":
                             #region
                             {
+                                if (rbConnectViaWebService.Checked)
+                                    Connector = new WebServiceConnector() { Url = cmbUrl.Text, Credentials = CurrentCredentials };
+                                else
+                                    Connector = new ClientModelConnector() { Url = cmbUrl.Text, Credentials = CurrentCredentials };
+
                                 btnConnect.Text = "Disconnect";
-                                SetStatusMessage("Connecting {0}", SharePointList.GetServiceUrl(cmbUrl.Text));
+                                SetStatusMessage("Connecting {0}", Connector.WebUrl);
                                 // Disable connection parameters
                                 SetControlEnable(gbConnection, false);
                                 SetControlEnable(gbCredentials, false);
@@ -248,7 +261,7 @@ namespace Caml.Maker
                                 Update();
 
                                 // Connect to sharepoint site web service
-                                var items = SharePointList.GetListCollection(cmbUrl.Text, GetCredentials());
+                                var items = Connector.GetListCollection();
                                 if (items == null)
                                 {
                                     SetStatusMessage(string.Empty);
@@ -271,6 +284,8 @@ namespace Caml.Maker
                         case "Disconnect":
                             #region
                             {
+                                Connector = null;
+
                                 btnConnect.Text = "Connect";
                                 // Disable connection parameters
                                 SetControlEnable(gbConnection, true);
@@ -336,22 +351,20 @@ namespace Caml.Maker
 
                     if (lvListLibrary.SelectedItems.Count > 0)
                     {
-                        var fields = new SharePointField[0];
-
                         // Get current selection
-                        var item = lvListLibrary.SelectedItems[0] as SharePointList;
+                        SPList item = lvListLibrary.SelectedItems[0] as SPList;
                         SetStatusMessage("Request '{0}' info from sharepoint site", item.Title);
 
                         #region Get list info
-                        ColumnInfo = SharePointList.GetList(cmbUrl.Text, GetCredentials(), item.Title, out fields);
-                        if (ColumnInfo != null)
+                        CurrentList = Connector.GetFields(item);
+                        if (CurrentList != null)
                         {
-                            tbListID.Text = item.ID;
+                            tbListID.Text = item.ID.ToString();
                             tbListName.Text = item.Title;
 
                             // Option
-                            var view = ColumnInfo.AsDataView();
-                            view.RowFilter = cbShowHidden.Checked ? string.Empty : "Hidden is null or Hidden<>'TRUE'";
+                            DataView view = CurrentList.FieldView;
+                            view.RowFilter = cbShowHidden.Checked ? string.Empty : "Hidden is null or Hidden <> 'TRUE'";
                             // Bind data
                             dgvColumns.DataSource = view;
 
@@ -360,9 +373,8 @@ namespace Caml.Maker
                             dgvColumns.Focus();
 
                             // Fill field combobox
-                            //RepairFieldCombobox();
                             cmbFields.Items.Clear();
-                            if (fields != null) fields.Each(f => cmbFields.Items.Add(f));
+                            item.Fields.Where(f => !f.Hidden).Each(f => cmbFields.Items.Add(f));
                             RowItem.AllField = cmbFields.Items;
                             cmbFilter.Enabled = btnAddRow.Enabled = btnInsertRow.Enabled = true;
                             btnExecuteQuery.Enabled = true;
@@ -389,10 +401,10 @@ namespace Caml.Maker
         /// <param name="e"></param>
         private void cbShowHide_CheckedChanged(object sender, EventArgs e)
         {
-            if (ColumnInfo != null)
+            if (CurrentList != null)
             {
                 // Option
-                var view = ColumnInfo.AsDataView();
+                var view = CurrentList.FieldView;
                 view.RowFilter = cbShowHidden.Checked ? string.Empty : "Hidden is null or Hidden<>'TRUE'";
                 // Bind data
                 dgvColumns.DataSource = view;
@@ -402,10 +414,11 @@ namespace Caml.Maker
 
         private void tcContent_Resize(object sender, EventArgs e)
         {
-            //Invoke(new MethodInvoker(() =>
-            //{
-            //    tcContent.Refresh();
-            //}));
+            Invoke(new MethodInvoker(() =>
+            {
+                //lvListLibrary.Refresh();
+                //tcContent.Refresh();
+            }));
         }
 
         /// <summary>
@@ -502,7 +515,7 @@ namespace Caml.Maker
                         if (required.Count > 0) { SetStatusMessage(Color.Red, "{0} required", string.Join(", ", required.ToArray())); return; }
 
                         item.Filter = cmbFilter.Text;
-                        item.Field = cmbFields.SelectedItem as SharePointField;
+                        item.Field = cmbFields.SelectedItem as SPField;
                         item.LogicalJoins = cmbLogicalJoins.Text;
                         item.ComparisonOperators = cmbComparisonOperators.SelectedItem as ComparisonOperator;
                         item.Value = cmbValues.Value;
@@ -514,7 +527,7 @@ namespace Caml.Maker
                         if (required.Count > 0) { SetStatusMessage(Color.Red, "{0} required", string.Join(", ", required.ToArray())); return; }
 
                         item.Filter = cmbFilter.Text;
-                        item.Field = cmbFields.SelectedItem as SharePointField;
+                        item.Field = cmbFields.SelectedItem as SPField;
                         break;
                     default:
                         SetStatusMessage(Color.Red, "Clause requied");
@@ -545,7 +558,7 @@ namespace Caml.Maker
                         if (required.Count > 0) { SetStatusMessage(Color.Red, "{0} required", string.Join(", ", required.ToArray())); return; }
 
                         item.Filter = cmbFilter.Text;
-                        item.Field = cmbFields.SelectedItem as SharePointField;
+                        item.Field = cmbFields.SelectedItem as SPField;
                         item.LogicalJoins = cmbLogicalJoins.Text;
                         item.ComparisonOperators = cmbComparisonOperators.SelectedItem as ComparisonOperator;
                         item.Value = cmbValues.Value;
@@ -557,7 +570,7 @@ namespace Caml.Maker
                         if (required.Count > 0) { SetStatusMessage(Color.Red, "{0} required", string.Join(", ", required.ToArray())); return; }
 
                         item.Filter = cmbFilter.Text;
-                        item.Field = cmbFields.SelectedItem as SharePointField;
+                        item.Field = cmbFields.SelectedItem as SPField;
                         break;
                     default:
                         SetStatusMessage(Color.Red, "Clause requied");
@@ -641,7 +654,7 @@ namespace Caml.Maker
         /// <param name="e"></param>
         private void cmbFields_SelectedValueChanged(object sender, EventArgs e)
         {
-            cmbValues.Field = cmbFields.SelectedItem as SharePointField;
+            cmbValues.Field = cmbFields.SelectedItem as SPField;
         }
 
         /// <summary>
@@ -655,12 +668,17 @@ namespace Caml.Maker
             {
                 try
                 {
-                    DataTable dt = SharePointList.GetListItems(cmbUrl.Text, GetCredentials(),
-                           tbListName.Text,
-                           "", tbCamlXml.Text, null, "", null, "");
-                    dgvResult.DataSource = null;
+                    SPListItemCollection collection = Connector.GetListItems(
+                        tbListName.Text,
+                        "",
+                        tbCamlXml.Text,
+                        null,
+                        "",
+                        null,
+                        ""
+                    );
+                    dgvResult.DataSource = collection.GenerateView(CurrentList);
                     dgvResult.Refresh();
-                    dgvResult.DataSource = dt;
 
                     // Open list info tab
                     tcContent.SelectedTab = tcContent.TabPages["tabResult"];
@@ -673,5 +691,10 @@ namespace Caml.Maker
             }));
         }
         #endregion
+
+        private void selectAll_KeyPress(object sender, EventArgs e)
+        {
+
+        }
     }
 }

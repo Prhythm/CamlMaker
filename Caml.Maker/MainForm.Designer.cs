@@ -61,7 +61,6 @@
             this.lbListID = new System.Windows.Forms.Label();
             this.lbListName = new System.Windows.Forms.Label();
             this.tabQuery = new System.Windows.Forms.TabPage();
-            this.spQueryOuterContainer = new System.Windows.Forms.SplitContainer();
             this.spQueryBuilder = new System.Windows.Forms.SplitContainer();
             this.plRowControls = new Caml.Maker.Model.StackPanel();
             this.flplRowBuilder = new System.Windows.Forms.FlowLayoutPanel();
@@ -75,7 +74,6 @@
             this.tbCamlXml = new System.Windows.Forms.TextBox();
             this.flplQueryCommand = new System.Windows.Forms.FlowLayoutPanel();
             this.btnExecuteQuery = new System.Windows.Forms.Button();
-            this.plProperties = new System.Windows.Forms.Panel();
             this.tabResult = new System.Windows.Forms.TabPage();
             this.dgvResult = new System.Windows.Forms.DataGridView();
             this.ssStatusBar = new System.Windows.Forms.StatusStrip();
@@ -94,9 +92,6 @@
             this.tabListInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).BeginInit();
             this.tabQuery.SuspendLayout();
-            this.spQueryOuterContainer.Panel1.SuspendLayout();
-            this.spQueryOuterContainer.Panel2.SuspendLayout();
-            this.spQueryOuterContainer.SuspendLayout();
             this.spQueryBuilder.Panel1.SuspendLayout();
             this.spQueryBuilder.Panel2.SuspendLayout();
             this.spQueryBuilder.SuspendLayout();
@@ -116,7 +111,7 @@
             this.gbConnection.Controls.Add(this.lbUrl);
             this.gbConnection.Location = new System.Drawing.Point(12, 7);
             this.gbConnection.Name = "gbConnection";
-            this.gbConnection.Size = new System.Drawing.Size(703, 40);
+            this.gbConnection.Size = new System.Drawing.Size(957, 40);
             this.gbConnection.TabIndex = 3;
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
@@ -128,7 +123,7 @@
             this.cmbUrl.FormattingEnabled = true;
             this.cmbUrl.Location = new System.Drawing.Point(127, 13);
             this.cmbUrl.Name = "cmbUrl";
-            this.cmbUrl.Size = new System.Drawing.Size(260, 21);
+            this.cmbUrl.Size = new System.Drawing.Size(514, 21);
             this.cmbUrl.TabIndex = 5;
             // 
             // plConnectMethod
@@ -138,7 +133,7 @@
             this.plConnectMethod.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.plConnectMethod.Controls.Add(this.rbConnectViaObjectModel);
             this.plConnectMethod.Controls.Add(this.rbConnectViaWebService);
-            this.plConnectMethod.Location = new System.Drawing.Point(393, 11);
+            this.plConnectMethod.Location = new System.Drawing.Point(647, 11);
             this.plConnectMethod.Name = "plConnectMethod";
             this.plConnectMethod.Size = new System.Drawing.Size(304, 23);
             this.plConnectMethod.TabIndex = 4;
@@ -146,7 +141,6 @@
             // rbConnectViaObjectModel
             // 
             this.rbConnectViaObjectModel.AutoSize = true;
-            this.rbConnectViaObjectModel.Enabled = false;
             this.rbConnectViaObjectModel.Location = new System.Drawing.Point(0, 3);
             this.rbConnectViaObjectModel.Name = "rbConnectViaObjectModel";
             this.rbConnectViaObjectModel.Size = new System.Drawing.Size(148, 17);
@@ -212,7 +206,7 @@
             this.gbCredentials.Controls.Add(this.plCredentials);
             this.gbCredentials.Location = new System.Drawing.Point(12, 49);
             this.gbCredentials.Name = "gbCredentials";
-            this.gbCredentials.Size = new System.Drawing.Size(703, 42);
+            this.gbCredentials.Size = new System.Drawing.Size(957, 42);
             this.gbCredentials.TabIndex = 1;
             this.gbCredentials.TabStop = false;
             this.gbCredentials.Text = "Credentials";
@@ -280,7 +274,7 @@
             // btnConnect
             // 
             this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConnect.Location = new System.Drawing.Point(721, 7);
+            this.btnConnect.Location = new System.Drawing.Point(975, 7);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(77, 85);
             this.btnConnect.TabIndex = 4;
@@ -304,8 +298,8 @@
             // scContent.Panel2
             // 
             this.scContent.Panel2.Controls.Add(this.gbContent);
-            this.scContent.Size = new System.Drawing.Size(786, 300);
-            this.scContent.SplitterDistance = 204;
+            this.scContent.Size = new System.Drawing.Size(1040, 608);
+            this.scContent.SplitterDistance = 269;
             this.scContent.TabIndex = 6;
             // 
             // gbList
@@ -314,7 +308,7 @@
             this.gbList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbList.Location = new System.Drawing.Point(0, 0);
             this.gbList.Name = "gbList";
-            this.gbList.Size = new System.Drawing.Size(204, 300);
+            this.gbList.Size = new System.Drawing.Size(269, 608);
             this.gbList.TabIndex = 0;
             this.gbList.TabStop = false;
             this.gbList.Text = "List";
@@ -329,7 +323,7 @@
             this.lvListLibrary.Location = new System.Drawing.Point(3, 16);
             this.lvListLibrary.MultiSelect = false;
             this.lvListLibrary.Name = "lvListLibrary";
-            this.lvListLibrary.Size = new System.Drawing.Size(198, 281);
+            this.lvListLibrary.Size = new System.Drawing.Size(263, 589);
             this.lvListLibrary.TabIndex = 0;
             this.lvListLibrary.TileSize = new System.Drawing.Size(168, 16);
             this.lvListLibrary.UseCompatibleStateImageBehavior = false;
@@ -343,7 +337,7 @@
             this.gbContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbContent.Location = new System.Drawing.Point(0, 0);
             this.gbContent.Name = "gbContent";
-            this.gbContent.Size = new System.Drawing.Size(578, 300);
+            this.gbContent.Size = new System.Drawing.Size(767, 608);
             this.gbContent.TabIndex = 0;
             this.gbContent.TabStop = false;
             this.gbContent.Text = "Content";
@@ -358,7 +352,7 @@
             this.tcContent.Location = new System.Drawing.Point(3, 16);
             this.tcContent.Name = "tcContent";
             this.tcContent.SelectedIndex = 0;
-            this.tcContent.Size = new System.Drawing.Size(572, 281);
+            this.tcContent.Size = new System.Drawing.Size(761, 589);
             this.tcContent.TabIndex = 1;
             this.tcContent.Resize += new System.EventHandler(this.tcContent_Resize);
             // 
@@ -368,7 +362,7 @@
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(564, 255);
+            this.tabLog.Size = new System.Drawing.Size(753, 563);
             this.tabLog.TabIndex = 0;
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
@@ -381,7 +375,7 @@
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbLog.Size = new System.Drawing.Size(558, 249);
+            this.tbLog.Size = new System.Drawing.Size(747, 557);
             this.tbLog.TabIndex = 0;
             this.tbLog.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.selectAll_KeyPress);
             // 
@@ -396,7 +390,7 @@
             this.tabListInfo.Location = new System.Drawing.Point(4, 22);
             this.tabListInfo.Name = "tabListInfo";
             this.tabListInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabListInfo.Size = new System.Drawing.Size(564, 255);
+            this.tabListInfo.Size = new System.Drawing.Size(753, 563);
             this.tabListInfo.TabIndex = 1;
             this.tabListInfo.Text = "List Info";
             this.tabListInfo.UseVisualStyleBackColor = true;
@@ -427,7 +421,7 @@
             this.dgvColumns.Name = "dgvColumns";
             this.dgvColumns.ReadOnly = true;
             this.dgvColumns.RowHeadersVisible = false;
-            this.dgvColumns.Size = new System.Drawing.Size(555, 167);
+            this.dgvColumns.Size = new System.Drawing.Size(744, 475);
             this.dgvColumns.TabIndex = 3;
             this.dgvColumns.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.NullBackground_CellFormatting);
             // 
@@ -438,7 +432,7 @@
             this.tbListID.Location = new System.Drawing.Point(66, 33);
             this.tbListID.Name = "tbListID";
             this.tbListID.ReadOnly = true;
-            this.tbListID.Size = new System.Drawing.Size(492, 20);
+            this.tbListID.Size = new System.Drawing.Size(681, 20);
             this.tbListID.TabIndex = 2;
             // 
             // tbListName
@@ -448,7 +442,7 @@
             this.tbListName.Location = new System.Drawing.Point(66, 7);
             this.tbListName.Name = "tbListName";
             this.tbListName.ReadOnly = true;
-            this.tbListName.Size = new System.Drawing.Size(492, 20);
+            this.tbListName.Size = new System.Drawing.Size(681, 20);
             this.tbListName.TabIndex = 2;
             // 
             // lbListID
@@ -471,30 +465,13 @@
             // 
             // tabQuery
             // 
-            this.tabQuery.Controls.Add(this.spQueryOuterContainer);
+            this.tabQuery.Controls.Add(this.spQueryBuilder);
             this.tabQuery.Location = new System.Drawing.Point(4, 22);
             this.tabQuery.Name = "tabQuery";
-            this.tabQuery.Size = new System.Drawing.Size(564, 255);
+            this.tabQuery.Size = new System.Drawing.Size(753, 563);
             this.tabQuery.TabIndex = 2;
             this.tabQuery.Text = "Query";
             this.tabQuery.UseVisualStyleBackColor = true;
-            // 
-            // spQueryOuterContainer
-            // 
-            this.spQueryOuterContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.spQueryOuterContainer.Location = new System.Drawing.Point(0, 0);
-            this.spQueryOuterContainer.Name = "spQueryOuterContainer";
-            // 
-            // spQueryOuterContainer.Panel1
-            // 
-            this.spQueryOuterContainer.Panel1.Controls.Add(this.spQueryBuilder);
-            // 
-            // spQueryOuterContainer.Panel2
-            // 
-            this.spQueryOuterContainer.Panel2.Controls.Add(this.plProperties);
-            this.spQueryOuterContainer.Size = new System.Drawing.Size(564, 255);
-            this.spQueryOuterContainer.SplitterDistance = 486;
-            this.spQueryOuterContainer.TabIndex = 2;
             // 
             // spQueryBuilder
             // 
@@ -512,9 +489,9 @@
             // 
             this.spQueryBuilder.Panel2.Controls.Add(this.tbCamlXml);
             this.spQueryBuilder.Panel2.Controls.Add(this.flplQueryCommand);
-            this.spQueryBuilder.Size = new System.Drawing.Size(486, 255);
-            this.spQueryBuilder.SplitterDistance = 127;
-            this.spQueryBuilder.TabIndex = 0;
+            this.spQueryBuilder.Size = new System.Drawing.Size(753, 563);
+            this.spQueryBuilder.SplitterDistance = 280;
+            this.spQueryBuilder.TabIndex = 1;
             // 
             // plRowControls
             // 
@@ -522,9 +499,9 @@
             this.plRowControls.BackColor = System.Drawing.SystemColors.ControlLight;
             this.plRowControls.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.plRowControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plRowControls.Location = new System.Drawing.Point(0, 58);
+            this.plRowControls.Location = new System.Drawing.Point(0, 29);
             this.plRowControls.Name = "plRowControls";
-            this.plRowControls.Size = new System.Drawing.Size(486, 69);
+            this.plRowControls.Size = new System.Drawing.Size(753, 251);
             this.plRowControls.TabIndex = 1;
             // 
             // flplRowBuilder
@@ -541,7 +518,7 @@
             this.flplRowBuilder.Dock = System.Windows.Forms.DockStyle.Top;
             this.flplRowBuilder.Location = new System.Drawing.Point(0, 0);
             this.flplRowBuilder.Name = "flplRowBuilder";
-            this.flplRowBuilder.Size = new System.Drawing.Size(486, 58);
+            this.flplRowBuilder.Size = new System.Drawing.Size(753, 29);
             this.flplRowBuilder.TabIndex = 0;
             // 
             // cmbFilter
@@ -627,7 +604,7 @@
             // 
             // btnInsertRow
             // 
-            this.btnInsertRow.Location = new System.Drawing.Point(3, 32);
+            this.btnInsertRow.Location = new System.Drawing.Point(471, 3);
             this.btnInsertRow.Name = "btnInsertRow";
             this.btnInsertRow.Size = new System.Drawing.Size(75, 23);
             this.btnInsertRow.TabIndex = 0;
@@ -642,9 +619,9 @@
             this.tbCamlXml.Multiline = true;
             this.tbCamlXml.Name = "tbCamlXml";
             this.tbCamlXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbCamlXml.Size = new System.Drawing.Size(486, 95);
+            this.tbCamlXml.Size = new System.Drawing.Size(753, 250);
             this.tbCamlXml.TabIndex = 2;
-            this.tbCamlXml.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.selectAll_KeyPress);
+            this.tbCamlXml.Click += new System.EventHandler(this.selectAll_KeyPress);
             // 
             // flplQueryCommand
             // 
@@ -654,7 +631,7 @@
             this.flplQueryCommand.Dock = System.Windows.Forms.DockStyle.Top;
             this.flplQueryCommand.Location = new System.Drawing.Point(0, 0);
             this.flplQueryCommand.Name = "flplQueryCommand";
-            this.flplQueryCommand.Size = new System.Drawing.Size(486, 29);
+            this.flplQueryCommand.Size = new System.Drawing.Size(753, 29);
             this.flplQueryCommand.TabIndex = 1;
             // 
             // btnExecuteQuery
@@ -667,21 +644,12 @@
             this.btnExecuteQuery.UseVisualStyleBackColor = true;
             this.btnExecuteQuery.Click += new System.EventHandler(this.btnExecuteQuery_Click);
             // 
-            // plProperties
-            // 
-            this.plProperties.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.plProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plProperties.Location = new System.Drawing.Point(0, 0);
-            this.plProperties.Name = "plProperties";
-            this.plProperties.Size = new System.Drawing.Size(74, 255);
-            this.plProperties.TabIndex = 1;
-            // 
             // tabResult
             // 
             this.tabResult.Controls.Add(this.dgvResult);
             this.tabResult.Location = new System.Drawing.Point(4, 22);
             this.tabResult.Name = "tabResult";
-            this.tabResult.Size = new System.Drawing.Size(564, 255);
+            this.tabResult.Size = new System.Drawing.Size(753, 563);
             this.tabResult.TabIndex = 3;
             this.tabResult.Text = "Result";
             this.tabResult.UseVisualStyleBackColor = true;
@@ -697,7 +665,7 @@
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
             this.dgvResult.RowHeadersVisible = false;
-            this.dgvResult.Size = new System.Drawing.Size(564, 255);
+            this.dgvResult.Size = new System.Drawing.Size(753, 563);
             this.dgvResult.TabIndex = 0;
             this.dgvResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.NullBackground_CellFormatting);
             // 
@@ -705,9 +673,9 @@
             // 
             this.ssStatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslStatus});
-            this.ssStatusBar.Location = new System.Drawing.Point(0, 395);
+            this.ssStatusBar.Location = new System.Drawing.Point(0, 703);
             this.ssStatusBar.Name = "ssStatusBar";
-            this.ssStatusBar.Size = new System.Drawing.Size(810, 22);
+            this.ssStatusBar.Size = new System.Drawing.Size(1064, 22);
             this.ssStatusBar.TabIndex = 7;
             this.ssStatusBar.Text = "statusStrip1";
             // 
@@ -721,7 +689,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 417);
+            this.ClientSize = new System.Drawing.Size(1064, 725);
             this.Controls.Add(this.ssStatusBar);
             this.Controls.Add(this.scContent);
             this.Controls.Add(this.btnConnect);
@@ -753,9 +721,6 @@
             this.tabListInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).EndInit();
             this.tabQuery.ResumeLayout(false);
-            this.spQueryOuterContainer.Panel1.ResumeLayout(false);
-            this.spQueryOuterContainer.Panel2.ResumeLayout(false);
-            this.spQueryOuterContainer.ResumeLayout(false);
             this.spQueryBuilder.Panel1.ResumeLayout(false);
             this.spQueryBuilder.Panel1.PerformLayout();
             this.spQueryBuilder.Panel2.ResumeLayout(false);
@@ -810,22 +775,20 @@
         private System.Windows.Forms.TabPage tabResult;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.DataGridView dgvResult;
+        private System.Windows.Forms.ComboBox cmbUrl;
         private System.Windows.Forms.SplitContainer spQueryBuilder;
-        private System.Windows.Forms.SplitContainer spQueryOuterContainer;
+        private Model.StackPanel plRowControls;
         private System.Windows.Forms.FlowLayoutPanel flplRowBuilder;
-        private System.Windows.Forms.Panel plProperties;
         private System.Windows.Forms.ComboBox cmbFilter;
+        private System.Windows.Forms.ComboBox cmbLogicalJoins;
+        private System.Windows.Forms.ComboBox cmbFields;
+        private System.Windows.Forms.ComboBox cmbComparisonOperators;
+        private Model.FieldValue cmbValues;
         private System.Windows.Forms.Button btnAddRow;
         private System.Windows.Forms.Button btnInsertRow;
-        private System.Windows.Forms.ComboBox cmbLogicalJoins;
-        private System.Windows.Forms.ComboBox cmbComparisonOperators;
-        private System.Windows.Forms.ComboBox cmbFields;
-        private Caml.Maker.Model.FieldValue cmbValues;
-        private Model.StackPanel plRowControls;
-        private System.Windows.Forms.ComboBox cmbUrl;
+        private System.Windows.Forms.TextBox tbCamlXml;
         private System.Windows.Forms.FlowLayoutPanel flplQueryCommand;
         private System.Windows.Forms.Button btnExecuteQuery;
-        private System.Windows.Forms.TextBox tbCamlXml;
     }
 }
 
